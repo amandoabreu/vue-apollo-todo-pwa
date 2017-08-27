@@ -1,30 +1,72 @@
+# NOT FISNIHED, IGNORE
 # vue-apollo-todo-pwa
 
 > A todo list with persistent data in graph.cool
 
 ## Build Setup
 
-``` bash
-# install dependencies
-npm install
+Install vue-cli
 
-# serve with hot reload at localhost:8080
-npm run dev
+`vue init pwa vue-apollo-todo-pwa`
+Install vue.router? Yes, everything else is optional
 
-# build for production with minification
-npm run build
+`npm install`
+`npm install vue-apollo vuex vuex-persist --save`
 
-# build for production and view the bundle analyzer report
-npm run build --report
+`npm run dev`
 
-# run unit tests
-npm run unit
+`localhost:8080` should be serving your app.
 
-# run e2e tests
-npm run e2e
+Requirements for the todo list:
 
-# run all tests
-npm test
+ - Each item has two fields, “name” and “done”.
+ - Name is a string, done is boolean
+ - There should be a form to add an item with just the name, “done” should default to “false”, this should go into the database.
+ - Clicking on a previously added item should toggle done (false|true)
+
+Signup to graphcool, create a new app.
+Create a new object:
+
+```
+type Item implements Node {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+  name: String!
+  done: Boolean @defaultValue(value: false)
+}
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Now, let’s change the Hello.vue to TodoList.vue, change the export’s name to todolist , which means you will also have to change router/index.js to import TodoList from @/components/TodoList instead of Hello. Change the routes to:
+
+routes: [
+    {
+      path: '/',
+      name: 'TodoList',
+      component: TodoList
+    }
+  ]
+
+Let’s add dummy data to our store, register it, and pass it onto the global context.
+
+In modules/TOdoList.js
+
+const state = {
+  todos: [
+    { name: 'Clean bedroom', done: false },
+    { name: 'Feed hamster', done: false },
+    { name: 'Wake up', done: true }
+  ]
+}
+
+Main.js:
+
+import store from './store/index'
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: { App }
+})
