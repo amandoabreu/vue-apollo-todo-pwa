@@ -1,8 +1,8 @@
 <template>
-  <div class="hello">
+  <div>
     <ul>
       <li v-for="todo in todos" v-bind:class="{ todoDone: todo.done }" @click="toggleDone(todo.name)">
-        <span>{{ todo.name }}</span>
+        <TodoItem :name="todo.name"></TodoItem>
       </li>
     </ul>
     <input v-model="newTodoName" placeholder="I need to..."/><button type="button" @click="handleClick(newTodoName)">Add Todo</button>
@@ -12,6 +12,7 @@
 <script>
 // import store from '../store/index'
 import { mapGetters, mapActions } from 'vuex'
+import TodoItem from './TodoItem'
 // import * as types from '../store/mutation-types'
 
 export default {
@@ -34,6 +35,9 @@ export default {
     return {
       newTodoName: ''
     }
+  },
+  components: {
+    TodoItem
   }
 }
 </script>
