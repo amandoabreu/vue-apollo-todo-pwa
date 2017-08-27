@@ -182,3 +182,25 @@ handleClick (todoName) {
 ```
 
 Handle click add the todo to the state, and sets the `newTodoName` to `‘’` (so the value doesn’t stay there after clicking)
+
+The state is changed with a mutation via an action, this.addTodo is an action:
+```
+const actions = {
+  addTodo ({ commit, state }, name) {
+    commit(types.ADD_TODO, {
+      todoName: name
+    })
+  }
+}
+```
+
+Which in turns makes a mutation to the state:
+```
+const mutations = {
+  [types.ADD_TODO] (state, payload) {
+    state.todos.push({ name: payload.todoName, done: false })
+  },
+}
+```
+
+`payload.todoName` is passed in `commit(types.ADD_TODO, { todoName: name })`, `name` comes from the parameter in `this.addTodo(todoName)`
