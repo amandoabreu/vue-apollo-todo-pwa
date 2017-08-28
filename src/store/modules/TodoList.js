@@ -1,17 +1,18 @@
 import * as types from '../mutation-types'
 
 const state = {
-  todos: [
-    { id: 0, name: 'Clean bedroom', done: false },
-    { id: 1, name: 'Feed hamster', done: false },
-    { id: 2, name: 'Wake up', done: true }
-  ]
+  todos: []
 }
 
 const mutations = {
+  [types.SET_TODOS] (state, payload) {
+    state.todos = payload.todos.map(todo => Object.assign({}, todo))
+  },
+
   [types.ADD_TODO] (state, payload) {
     state.todos.push({ name: payload.todoName, done: false })
   },
+
   [types.TOGGLE_DONE] (state, payload) {
     var selectedTodo = state.todos.find(todo => todo.name === payload.todoName)
     selectedTodo.done = !selectedTodo.done
@@ -19,7 +20,13 @@ const mutations = {
 }
 
 const actions = {
-  addTodo ({ commit, state }, name) {
+  setTodos ({ commit, state }, todos) {
+    commit(types.SET_TODOS, {
+      todos
+    })
+  },
+  addTodo ({ commit, state, rootState }, name) {
+    console.log(rootState)
     commit(types.ADD_TODO, {
       todoName: name
     })

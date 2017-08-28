@@ -3,6 +3,10 @@
 
 > A todo list with persistent data in graph.cool
 
+What we will do:
+- Create basic Todo list PWA
+- Add Auth and have users that own todos, with permissions to only mark their own as solved
+
 ## Build Setup
 
 Install vue-cli
